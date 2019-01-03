@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<script src="js/ford.js"></script>
+<script src="js/bldrs.js"></script>
+<title>Ford Circles</title>
+</head>
+<body>
+	<div style="text-align:center;" id='svg'></div>
+</body>
+
+<script>	
+	let sequence = nthLevelFaery(40);
+	let svg = fordCirclesSVG(sequence, 600, 'black','vertical', omitEnds=false, omitCentre=true);		
+	document.getElementById("svg").innerHTML = svg;
+</script>
+
+</html>
