@@ -49,7 +49,76 @@ class Frac {
 	value(){
 		return this.n/this.d;
 	}
+	latex(){
+		return "\\frac{" + this.n + "}{" + this.d + "}"; 
+	}
 }
+
+class FracList {
+	constructor(list){
+		this.list = list;
+	}
+
+	fracList(){
+		if (this.list.length < 25){
+			return this.shortFracList();
+		} else{
+			return this.longFracList();
+		}
+	}
+
+	shortFracList(){
+		let fList = "\\[[";
+		let frac = null;
+		let position = 0;
+		for(let f in this.list){
+			position ++;
+			frac = this.list[f];
+			fList += (frac.latex());
+			if (position < this.list.length) {
+				fList += ", ";
+			}
+		}
+		fList += "]\\]";
+		return  fList;
+	}
+
+	longFracList(){
+		let fList = "\\[[";
+		let frac = null;
+		for(let f = 0; f < 4; f++){
+			frac = this.list[f];
+			fList += (frac.latex());
+			fList += ", ";			
+		}
+		
+		fList += " \\ldots ";
+		
+		let mid = Math.floor(this.list.length/2);
+		for(let f = (mid-3) ; f <=(mid+3); f++){
+			let frac = this.list[f];
+			fList += (frac.latex());
+			fList += ", ";
+		}
+
+		fList += " \\ldots ";
+		let position = this.list.length -4;			
+		for(let f = (this.list.length -4); f <(this.list.length); f++){
+			let frac = this.list[f];
+			fList += (frac.latex());
+			position++;
+			if (position < this.list.length) {
+				fList += ", ";
+			}
+
+		}
+
+		fList += "]\\]";
+		return  fList;
+
+	}
+}
+
 /*
 * Internal function for calculating the greatest denominator
 * in a list of fractions.
@@ -96,6 +165,8 @@ function faerySequence(sequence){
 	return newSequence;
 }
 
+
+
 /*
 * Principle public function for generating Faery sequence.
 */
@@ -107,7 +178,7 @@ function nthLevelFaery(n){
 	return start;
 }
 
-function fordCirclesSVG(faery, size, color='grey',direction='horizontal', omitEnds=false, omitCentre=false){
+function fordCirclesSVG(sequence, size, color='grey',direction='horizontal', omitEnds=false, omitCentre=false){
 	let height = size;
 	let width = size;
 	if (direction == 'horizontal'){
@@ -129,8 +200,6 @@ function fordCirclesSVG(faery, size, color='grey',direction='horizontal', omitEn
 			continue;
 		}
 		let frac = sequence[f];
-		console.log(frac.d);
-		console.log(frac.value());
 		let x = scale*frac.value();
 		let r = (scale)/(2*(Math.pow(frac.d,2)))
 		let y = null;
