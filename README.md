@@ -6,3 +6,6 @@ With the functions provided, you can generate an image displaying Ford circles, 
 ![ford circles](https://raw.githubusercontent.com/dmackinnon1/faeryford/master/imgs/horizontal40.png)
 
 The function parameters allow you to change the colour, directeion, and omit the end and centre circles.
+
+![ford circles](https://raw.githubusercontent.com/dmackinnon1/faeryford/master/imgs/blue_vertical.png)
+
