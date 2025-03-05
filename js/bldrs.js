@@ -117,7 +117,7 @@ class TikZCircle {
 	}
 
 	build(){
-		let result = "\\filldraw [ultra thin, " + this.color + "] ("+this.x +"," + this.y +") circle (" +this.radius +");\n";
+		let result = "\\draw [ultra thin, color=" + this.color + "] ("+this.x +"," + this.y +") circle (" +this.radius +");\n"; //filldraw
 		return result;
 	}
 };
