@@ -1,4 +1,5 @@
 "use strict";
+let bldrs = require('./bldrs.js');
 
 /*
  * Utility functions and classes for calculating Farey sequences
@@ -243,3 +244,65 @@ function fordCirclesSVG(sequence, size, color='grey',direction='horizontal', omi
 }
 
 
+
+function fordCiclesTikZ(color='grey',direction='horizontal', omitEnds=false, omitCentre=false){
+	let size = 600;
+	let sequence = nthLevelFarey(5);
+	let height = size;
+	let width = size;
+	if (direction == 'horizontal'){
+		height = height/2;
+	} else {
+		width = width/2;
+	}
+	let scale = size;
+	
+	let tikZ = new bldrs.TikZBuilder();
+	
+	
+	for (let f in sequence){
+		let i = parseInt(f);
+		if ((i == 0 || i == (sequence.length - 1)) && omitEnds){
+			continue;
+		}
+		if( (i == ((sequence.length -1)/2))&& omitCentre ){
+			continue;
+		}
+		let frac = sequence[f];
+		let x = scale*frac.value();
+		let r = (scale)/(2*(Math.pow(frac.d,2)))
+		let y = null;
+		
+		let dot = null;
+		let cx1 = null;
+		let cy1 = null;
+		let cx2 = null;
+		let cy2 = null;
+		if (direction === "horizontal"){
+			y =  height/2 + r;
+			cx1 = width-x;
+			cy1 = y;
+			cx2 = width-x;
+			cy2 = height-y; 
+		} else {
+			y = width/2 +r;
+			cx1 = width -y;
+			cy1 = x;
+			cx2 = y;
+			cy2 = x; 			
+		}
+			
+		tikZ.addComponent(new bldrs.TikZCircle(r,color,cx1,cy1));
+		tikZ.addComponent(new bldrs.TikZCircle(r,color,cx2,cy2));			
+	}
+	return tikZ.build();
+}
+
+
+var ford = {};
+ford.tikZImage = fordCiclesTikZ();
+try{
+    module.exports.ford = ford; 
+} catch(err){
+    console.log("non-node execution context");
+}

@@ -56,3 +56,76 @@ class RawHtml {
 		return this.raw;
 	}
 };
+
+/**
+ * TiKZ builders 
+ */
+
+class TikZBuilder {
+
+	constructor(){
+		this.components = [];
+		this.scale = 1;
+	}
+
+	reset(){
+		this.components = [];
+	}
+
+	scale(value){
+		this.scale = value;
+	}
+
+	build(){
+		let s = this.buildOpen();
+
+		for(let c in this.components) {
+			s += " " + this.components[c].build();
+		}
+
+		s += this.buildClose();
+		return s;
+	}
+
+	buildOpen(){
+		let s = "";
+		//s +=  "\\begin{figure}[!h] \n";
+		//s += "\\centering \n";
+		s+= "\\begin{tikzpicture}[scale="+this.scale +"]\n";
+		return s;
+	}
+
+	buildClose(){
+		let s = "";
+		s += "\\end{tikzpicture} \n";
+		//s +=  "\\end{figure} \n";		
+		return s;
+	}
+
+	addComponent(comp){
+		this.components.push(comp);
+	}		
+	
+};
+
+class TikZCircle {
+	constructor(rad, col, x, y){
+		this.radius = rad;
+		this.color = col;
+		this.x = x;
+		this.y = y;
+	}
+
+	build(){
+		let result = "\\filldraw [" + this.color + "] ("+this.x +"," + this.y +") circle (" +this.radius +");\n";
+		return result;
+	}
+};
+
+
+try{
+    module.exports.TikZBuilder = TikZBuilder; 
+    module.exports.TikZCircle = TikZCircle; 
+} catch(err){
+    console.log("non-node execution context");
+}
