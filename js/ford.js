@@ -245,9 +245,9 @@ function fordCirclesSVG(sequence, size, color='grey',direction='horizontal', omi
 
 
 
-function fordCiclesTikZ(color='gray',direction='horizontal', omitEnds=false, omitCentre=false){
+function fordCiclesTikZ(color='gray',direction='horizontal', omitEnds=true, omitCentre=false){
 	let size = 10;
-	let sequence = nthLevelFarey(5);
+	let sequence = nthLevelFarey(12);
 	let height = size;
 	let width = size;
 	if (direction == 'horizontal'){
